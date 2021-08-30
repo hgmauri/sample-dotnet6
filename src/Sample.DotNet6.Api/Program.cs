@@ -7,6 +7,8 @@ using Sample.DotNet6.Api.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddLogging();
+builder.Services.AddHttpClient();
 builder.Services.AddCors();
 
 builder.Services.AddScoped<IHelloService, HelloService>();
