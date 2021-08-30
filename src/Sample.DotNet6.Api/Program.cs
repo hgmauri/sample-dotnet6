@@ -13,6 +13,7 @@ builder.Services.AddCors();
 
 builder.Services.AddScoped<IHelloService, HelloService>();
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -24,10 +25,9 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1"));
 }
-
-app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1"));
 
 app.UseCors(p =>
 {
@@ -36,13 +36,5 @@ app.UseCors(p =>
     p.AllowAnyHeader();
 });
 
-app.MapGet("/example", (bool? isHappy, IHelloService service, ClaimsPrincipal user) =>
-{
-    if (isHappy is null)
-        return Results.BadRequest();
-
-    return Results.Ok(service.Hello((bool)isHappy));
-});
-
-// Run the app
+app.MapControllers();
 app.Run();
