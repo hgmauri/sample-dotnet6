@@ -1,4 +1,4 @@
-﻿namespace Sample.DotNet6.Api.Services
+﻿namespace Sample.DotNet6.Domain.Services
 {
     public interface IHelloService
     {

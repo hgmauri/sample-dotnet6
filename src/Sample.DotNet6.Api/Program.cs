@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sample.DotNet6.Api.Services;
+using Sample.DotNet6.Api.Core.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +11,7 @@ builder.Services.AddLogging();
 builder.Services.AddHttpClient();
 builder.Services.AddCors();
 
-builder.Services.AddScoped<IHelloService, HelloService>();
+builder.Setup();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

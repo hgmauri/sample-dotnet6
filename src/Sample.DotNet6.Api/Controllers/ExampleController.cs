@@ -1,17 +1,20 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Sample.DotNet6.Api.Services;
+using Sample.DotNet6.Domain.Services;
 
-[ApiController]
-[Route("[controller]")]
-public class ExampleController : ControllerBase
+namespace Sample.DotNet6.Api.Controllers
 {
-    [HttpGet("test")]
-    public async Task<IResult> AutoAllocateAsync([FromQuery] bool? isHappy, [FromServices] IHelloService service)
+    [ApiController]
+    [Route("[controller]")]
+    public class ExampleController : ControllerBase
     {
-        if (isHappy is null)
-            return Results.BadRequest();
+        [HttpGet("test")]
+        public async Task<IResult> AutoAllocateAsync([FromQuery] bool? isHappy, [FromServices] IHelloService service)
+        {
+            if (isHappy is null)
+                return Results.BadRequest();
 
-        return Results.Ok(service.Hello((bool)isHappy));
+            return Results.Ok(service.Hello((bool)isHappy));
+        }
     }
 }
