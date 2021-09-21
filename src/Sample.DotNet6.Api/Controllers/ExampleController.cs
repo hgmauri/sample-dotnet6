@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Sample.DotNet6.Domain.Services;
-using Sample.DotNet6.Api.Core.Extensions;
 
 namespace Sample.DotNet6.Api.Controllers
 {
