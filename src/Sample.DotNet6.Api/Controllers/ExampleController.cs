@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Sample.DotNet6.Domain.Services;
+using Sample.DotNet6.Api.Core.Extensions;
 
 namespace Sample.DotNet6.Api.Controllers
 {
@@ -8,13 +11,19 @@ namespace Sample.DotNet6.Api.Controllers
     [Route("[controller]")]
     public class ExampleController : ControllerBase
     {
-        [HttpGet("test")]
-        public async Task<IResult> AutoAllocateAsync([FromQuery] bool? isHappy, [FromServices] IHelloService service)
-        {
-            if (isHappy is null)
-                return Results.BadRequest();
+        private readonly IHelloService _helloService;
 
-            return Results.Ok(service.Hello((bool)isHappy));
-        }
+        public ExampleController(IHelloService helloService) => _helloService = helloService;
+
+        [HttpGet("test")]
+        public async Task<ActionResult<bool>> AutoAllocateAsync([FromQuery] bool? isHappy) =>
+            await ExecuteAsync<ActionResult<bool>>(async () =>
+            {
+                if (isHappy is null)
+                    return BadRequest();
+
+                return Ok(_helloService.Hello((bool)isHappy));
+            });
     }
 }
+
